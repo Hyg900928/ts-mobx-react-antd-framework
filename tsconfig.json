@@ -1,0 +1,39 @@
+{
+    "compilerOptions": {
+      "target": "esNext",
+      "module": "esNext",
+      "allowJs": true,
+      "lib": [
+        "es2015",
+        "es6",
+        "dom"
+      ],
+      "types": [
+        "node"
+      ],
+      "typeRoots": [
+        "node_modules/@types"
+      ],
+      "jsx": "react",
+      "sourceMap": true,
+      "rootDir": "./",
+      "outDir": "./dist",
+      "moduleResolution": "node",
+      "preserveConstEnums": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "allowSyntheticDefaultImports": true,
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./src/*"]
+      }
+    },
+    "include": [
+      "./src/**/*.ts",
+      "./src/**/*.tsx",
+      "./typings/**/*.d.ts",
+    ],
+    "exclude": [
+      "node_modules"
+    ]
+  }

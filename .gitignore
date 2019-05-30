@@ -1,0 +1,11 @@
+node_modules/
+dist/
+bower_components/
+*.log
+.idea/
+package-lock.json
+backend/node_modules/
+backend/build/
+dist/
+yarn.lock
+
