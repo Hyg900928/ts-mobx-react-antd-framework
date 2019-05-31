@@ -8,4 +8,5 @@ backend/node_modules/
 backend/build/
 dist/
 yarn.lock
+.vscode/
 
