@@ -35,7 +35,7 @@ class Home extends React.Component<HomeProps, {}> {
       const { form: {getFieldDecorator}, rootStore: { homeStore } }  = this.props
         return (
             <div>
-                Homesss
+                Home
                 <br />
                 <p>num: { homeStore.num }</p>
                 <Button type='primary' onClick={() => homeStore.add()}>确定</Button>
