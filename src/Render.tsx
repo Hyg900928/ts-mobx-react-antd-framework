@@ -5,9 +5,8 @@ import { BrowserRouter } from 'react-router-dom'
 import { AppContainer } from 'react-hot-loader'
 import { configure } from 'mobx'
 import { LocaleProvider } from 'antd'
-import { createBrowserHistory } from 'history'
 import zhCN from 'antd/lib/locale-provider/zh_CN'
-import { Provider as MobxProvider, observer, inject } from 'mobx-react'
+import { Provider as MobxProvider } from 'mobx-react'
 
 import createStore from '@/store/rootStore'
 import App from './App'
@@ -17,7 +16,6 @@ configure({
 })
 
 const store = new createStore()
-const history = createBrowserHistory()
 const render = (Component) => {
   ReactDom.render(
     <LocaleProvider locale={zhCN as any}>

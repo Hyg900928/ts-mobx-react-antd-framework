@@ -112,7 +112,7 @@ let config = {
   performance: {}
 }
 
-
+// 首先使用 awesome-typescript-loader, 再使用babel-loader
 config.module.rules.push({
   test: /\.ts|tsx?$/,
   enforce: 'pre',

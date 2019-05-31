@@ -1,15 +1,7 @@
 import React from 'react'
-import { hot } from 'react-hot-loader/root'
-import { LocaleProvider } from 'antd'
 import { observer, inject} from 'mobx-react'
-import zhCN from 'antd/lib/locale-provider/zh_CN'
-import DevTools, { configureDevtool } from 'mobx-react-devtools';
+import DevTools from 'mobx-react-devtools';
 import Routers from './router'
-import createStore from '@/store/rootStore'
-
-const Configs = require('../configs/index.ts')
-const store = new createStore()
-
 
 @inject('rootStore')
 @observer
