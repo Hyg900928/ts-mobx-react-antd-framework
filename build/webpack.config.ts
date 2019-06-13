@@ -9,6 +9,9 @@ const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-web
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { CheckerPlugin } = require('awesome-typescript-loader')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const WorkboxPlugin = require('workbox-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin')
+const autoprefixer = require('autoprefixer')
 const rootconfig = require('../configs/index.ts')
 
 
@@ -52,10 +55,6 @@ let config = {
       __DEV__,
       __PROD__,
     })),
-    new MiniCssExtractPlugin({
-      filename: __DEV__ ? '[nmae].css' : '[name].[hash].css',
-      chunkFilename:  __DEV__ ? "[id].css" : "[id].[hash].css"
-    })
   ],
   optimization: {
     splitChunks: {
@@ -178,7 +177,9 @@ config.module.rules.push({
      {
       loader:  'css-loader',
       options: {
-        sourceMap: __DEV__
+        sourceMap: __DEV__,
+        modules: true,
+        importLoaders: 1,
       }
      },
      {
@@ -186,6 +187,13 @@ config.module.rules.push({
       options: {
         sourceMap: __DEV__
       }
+     },
+     {
+       loader: 'postcss-loader',
+       options: {
+        plugins: () => [autoprefixer()],
+         sourceMap: __DEV__
+       }
      }
   ],
 })
@@ -214,7 +222,6 @@ config.plugins.push(
   new HtmlWebpackPlugin({
     template: inRootSrc('src/index.html'),
     favicon: inRootSrc('favicon.ico'),
-    hash: true,
     inject: true,
     manify: {
       removeComments: true,
@@ -223,6 +230,24 @@ config.plugins.push(
     chunks: ['main', 'vendor'],
     filename: 'index.html',
   }),
+  // 将public 里面的问价复制过去
+  new CopyPlugin([
+    {
+      from: 'public',
+      to: './',
+      toType: 'dir'
+    }
+  ]),
+  // 将css 单独提取出来
+  new MiniCssExtractPlugin({
+    filename: __DEV__ ? '[nmae].css' : '[name].[hash].css',
+    chunkFilename:  __DEV__ ? "[id].css" : "[id].[hash].css"
+  }),
+  // 开启pwa
+  new WorkboxPlugin.GenerateSW({
+  clientsClaim: true,
+  skipWaiting: true
+}),
 
 )
 

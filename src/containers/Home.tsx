@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { observer, inject} from 'mobx-react'
 import { DatePicker, Button, Form, Input} from 'antd'
 import { FormComponentProps, FormCreateOption } from 'antd/lib/form/Form'
-import './Home.scss'
+import styles from './Home.scss'
 import RootStore from '@/store/rootStore';
 
 const Item = Form.Item
@@ -35,6 +35,9 @@ class Home extends React.Component<HomeProps, {}> {
       const { form: {getFieldDecorator}, rootStore: { homeStore } }  = this.props
         return (
             <div>
+                <div className={styles.main}>
+
+                </div>
                 Home
                 <br />
                 <p>num: { homeStore.num }</p>
