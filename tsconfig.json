@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
-      "target": "esNext",
-      "module": "esnext",
+      "target": "es5",
+      "module": "commonjs",
       "allowJs": true,
       "lib": [
         "es2015",
@@ -16,12 +16,12 @@
       ],
       "jsx": "react",
       "sourceMap": true,
-      "rootDir": "./src",
       "outDir": "./dist",
       "moduleResolution": "node",
       "preserveConstEnums": true,
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
+      "esModuleInterop": true,
       "allowSyntheticDefaultImports": true,
       "baseUrl": ".",
       "paths": {
@@ -31,11 +31,10 @@
     "include": [
       "./src/**/*.ts",
       "./src/**/*.tsx",
-      "./typings/**/*.d.ts",
+      "./typings/*",
     ],
     "exclude": [
       "node_modules",
-      "build",
-      "config"
+      "./build/*"
     ]
   }

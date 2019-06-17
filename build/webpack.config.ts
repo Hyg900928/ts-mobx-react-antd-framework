@@ -1,18 +1,33 @@
-const webpack = require('webpack')
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-// const tsImportPluginFactory = require('ts-import-plugin')
-const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const { CheckerPlugin } = require('awesome-typescript-loader')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const WorkboxPlugin = require('workbox-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin')
-const autoprefixer = require('autoprefixer')
-const rootconfig = require('../configs/index.ts')
+// const webpack = require('webpack')
+// const path = require('path')
+// const HtmlWebpackPlugin = require('html-webpack-plugin')
+// const TerserPlugin = require('terser-webpack-plugin')
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+// const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+// // const tsImportPluginFactory = require('ts-import-plugin')
+// const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin');
+// const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+// const { CheckerPlugin } = require('awesome-typescript-loader')
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+// const WorkboxPlugin = require('workbox-webpack-plugin');
+// const CopyPlugin = require('copy-webpack-plugin')
+// const autoprefixer = require('autoprefixer')
+// const rootconfig = require('../configs/index.ts')
+
+import  webpack from 'webpack'
+import  path from 'path'
+import  HtmlWebpackPlugin from 'html-webpack-plugin';
+import  TerserPlugin from 'terser-webpack-plugin';
+import  MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import  OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import  ForkTsCheckerNotifierWebpackPlugin from 'fork-ts-checker-notifier-webpack-plugin';
+import  ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import { CheckerPlugin } from 'awesome-typescript-loader'
+import { CleanWebpackPlugin }  from 'clean-webpack-plugin';
+import  WorkboxPlugin from 'workbox-webpack-plugin';
+import  CopyPlugin from 'copy-webpack-plugin';
+import  autoprefixer from 'autoprefixer';
+import rootconfig from '../configs'
 
 
 
@@ -21,7 +36,7 @@ const inRootSrc = (file) => inRoot(rootconfig.pathBase, file)
 const __DEV__ = rootconfig.env === 'development'
 const __PROD__ = rootconfig.env === 'production'
 
-let config = {
+let config: webpack.Configuration = {
   mode: __DEV__ ? 'development' : 'production',
   name: 'client',
   target: 'web',
@@ -33,7 +48,7 @@ let config = {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
     alias: {
       '@': path.resolve(__dirname, '../src/'),
-      'react-dom': '@hot-loader/react-dom',
+      // 'react-dom': '@hot-loader/react-dom',
     },
   },
   devtool: __DEV__ ? 'source-map' : false,
@@ -54,7 +69,7 @@ let config = {
       'process.env': { NODE_ENV: JSON.stringify(rootconfig.env), PORT: JSON.stringify(rootconfig.port) },
       __DEV__,
       __PROD__,
-    })),
+    }))
   ],
   optimization: {
     splitChunks: {
@@ -105,10 +120,11 @@ let config = {
       new OptimizeCSSAssetsPlugin({})
     ]
   },
-  devServer: {
-
-  },
-  performance: {}
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+  }
 }
 
 // 首先使用 awesome-typescript-loader, 再使用babel-loader
@@ -250,31 +266,32 @@ config.plugins.push(
 }),
 
 )
-
+// Development tools
 if (__DEV__) {
-  config.devServer = {
-    host: 'localhost',
-    port: 9000,
-    publicPath: '/',
-    contentBase: path.join(__dirname, '..', 'src'),
-    hot: true,
-    open: true,
-    overlay: {
-      errors: true
-    },
-    compress: true,
-    quiet: true,
-    noInfo: false,
-    lazy: false,
-    stats: 'errors-only',
-    historyApiFallback: true,
-  }
+  // config.devServer = {
+  //   host: 'localhost',
+  //   port: 9000,
+  //   publicPath: '/',
+  //   contentBase: path.join(__dirname, '..', 'src'),
+  //   hot: true,
+  //   open: true,
+  //   overlay: {
+  //     errors: true
+  //   },
+  //   compress: true,
+  //   quiet: true,
+  //   noInfo: false,
+  //   lazy: false,
+  //   stats: 'errors-only',
+  //   historyApiFallback: true,
+  // }
+  // config.entry.main.push(`webpack-hot-middleware/client.js?path=/__webpack_hmr&timeout=1000&reload=true`)
   config.entry = {
     main: [
       '@babel/polyfill',
       inRootSrc('src/Render.tsx'),
-      'react-hot-loader/patch',
-      // `webpack-hot-middleware/client.js?path=/__webpack_hmr&timeout=1000&reload=true`,
+      // 'react-hot-loader/patch',
+      `webpack-hot-middleware/client?path=/__webpack_hmr&timeout=1000&reload=true`,
     ],
     vendor: rootconfig.compilerVendor,
   }
@@ -284,14 +301,8 @@ if (__DEV__) {
   )
 
 
-} else {
-  config.performance = {
-    hints: false,
-    maxEntrypointSize: 512000,
-    maxAssetSize: 512000
-  }
 }
 
-module.exports = config
+export default config
 
 

@@ -1,14 +1,10 @@
-// import debug = require("debug");
+import WebpackHotMiddleware from 'webpack-hot-middleware'
+import _debug from 'debug'
 
-// import * as WebpackHotMiddleware from 'webpack-hot-middleware'
-// import * as _debug from 'debug'
-const WebpackHotMiddleware = require('webpack-hot-middleware')
-const Log = require('debug')('app:server:webpack-hmr')
+const debug = _debug('app:server:webpack-hmr')
 
-// const debug = _debug()
-
-module.exports = (compiler: any, opts?: any) => {
-  Log('Enable Webpack Hot Module Replacement (HMR).')
+export default (compiler: any, opts?: WebpackHotMiddleware.Options) => {
+  debug('Enable Webpack Hot Module Replacement (HMR).')
 
   const middleware = WebpackHotMiddleware(compiler, opts)
   return async function koaWebpackHMR(ctx: any, next: any) {

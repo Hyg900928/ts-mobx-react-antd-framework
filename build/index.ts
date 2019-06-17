@@ -1,6 +1,6 @@
-const entryConfig = require('../configs')
-const appRoot = require('./app')
+import configs from '../configs'
+import app from './app'
 
-appRoot.listen(entryConfig.port, () => {
-  console.log('ClientRender is running at http://localhost:' + entryConfig.port + ',mode:' + entryConfig.env)
+app.listen(configs.port, () => {
+  console.log('ClientRender is running at http://localhost:' + configs.port + ',mode:' + configs.env)
 })
