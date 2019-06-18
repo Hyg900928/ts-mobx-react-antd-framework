@@ -1,11 +1,10 @@
 {
     "compilerOptions": {
-      "target": "es5",
-      "module": "commonjs",
+      "target": "esnext",
+      "module": "esnext",
       "allowJs": true,
       "lib": [
-        "es2015",
-        "es6",
+        "esnext",
         "dom"
       ],
       "types": [
@@ -23,6 +22,8 @@
       "emitDecoratorMetadata": true,
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true,
+      "forceConsistentCasingInFileNames": true,
+      // "strict": true,
       "baseUrl": ".",
       "paths": {
         "@/*": ["./src/*"]

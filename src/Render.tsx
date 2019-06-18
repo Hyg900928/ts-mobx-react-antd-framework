@@ -7,7 +7,7 @@ import { configure } from 'mobx'
 import { LocaleProvider } from 'antd'
 import zhCN from 'antd/lib/locale-provider/zh_CN'
 import { Provider as MobxProvider } from 'mobx-react'
-
+import config from '../configs'
 import createStore from '@/store/rootStore'
 import App from './App'
 
@@ -15,7 +15,9 @@ configure({
   enforceActions: 'observed' // 开启严格模式, 外界修改store ,只能通过action来修改
 })
 
+const __DEV__ = config.env === 'development'
 const store = new createStore()
+
 const render = (Component) => {
   ReactDom.render(
     <LocaleProvider locale={zhCN as any}>
@@ -24,9 +26,6 @@ const render = (Component) => {
               <Component />
             </BrowserRouter>
           </MobxProvider>
-      {/* <AppContainer>
-
-      </AppContainer> */}
     </LocaleProvider>,
     document.getElementById('app'),
   )
@@ -40,7 +39,9 @@ if ((module as any).hot) {
     render(containers)
   })
 }
-if ('serviceWorker' in navigator) {
+
+// 开启pwa
+if ('serviceWorker' in navigator && !__DEV__) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
       .register('/service-worker.js')

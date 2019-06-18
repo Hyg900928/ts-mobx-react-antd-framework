@@ -141,6 +141,7 @@ config.module.rules.push({
             "import",
             {
               "libraryName": "antd",
+              "libraryDirectory": "lib",
               "style": "css"
             }
           ],
@@ -246,7 +247,7 @@ config.plugins.push(
     chunks: ['main', 'vendor'],
     filename: 'index.html',
   }),
-  // 将public 里面的问价复制过去
+  // 将public 里面的文件复制过去
   new CopyPlugin([
     {
       from: 'public',
@@ -259,11 +260,7 @@ config.plugins.push(
     filename: __DEV__ ? '[nmae].css' : '[name].[hash].css',
     chunkFilename:  __DEV__ ? "[id].css" : "[id].[hash].css"
   }),
-  // 开启pwa
-  new WorkboxPlugin.GenerateSW({
-  clientsClaim: true,
-  skipWaiting: true
-}),
+
 
 )
 // Development tools
@@ -290,7 +287,6 @@ if (__DEV__) {
     main: [
       '@babel/polyfill',
       inRootSrc('src/Render.tsx'),
-      // 'react-hot-loader/patch',
       `webpack-hot-middleware/client?path=/__webpack_hmr&timeout=1000&reload=true`,
     ],
     vendor: rootconfig.compilerVendor,
@@ -301,6 +297,14 @@ if (__DEV__) {
   )
 
 
+} else {
+    config.plugins.push(
+      // 开启pwa
+      new WorkboxPlugin.GenerateSW({
+        clientsClaim: true,
+        skipWaiting: true
+      }),
+    )
 }
 
 export default config

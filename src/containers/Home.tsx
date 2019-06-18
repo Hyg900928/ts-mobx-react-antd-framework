@@ -38,6 +38,7 @@ class Home extends React.Component<HomeProps, {}> {
                 <div className={styles.main}>
 
                 </div>
+
                 Home
                 <br />
                 <p>num: { homeStore.num }</p>

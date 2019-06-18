@@ -24,9 +24,11 @@ const routes = [
 
 const Routers = ({
   rootStore,
+  // children
 }) => {
   return (
       <div>
+        {/* {children} */}
         <Switch>
           {
             routes.map(route => {

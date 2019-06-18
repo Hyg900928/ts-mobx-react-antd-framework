@@ -39,6 +39,7 @@ const plugins = [
       "useESModules": false
     }
   ],
+
   // "react-hot-loader/babel"
 ]
 module.exports = { presets, plugins };
