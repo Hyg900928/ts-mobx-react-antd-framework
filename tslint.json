@@ -7,8 +7,8 @@
     "jsRules": {},
     "rules": {
       "semicolon": [
-        true,
-       "never"
+        false,
+       "always"
       ],
       "indent": [
         true,
@@ -48,7 +48,7 @@
           "constructor": "never"
         }
       ],
-      "import-spacing": true,
+      "import-spacing": false,
       "no-irregular-whitespace": true,
       "space-within-parens": [
         true,
