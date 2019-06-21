@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { observer, inject} from 'mobx-react'
-import { DatePicker, Button, Form, Input} from 'antd'
-import { FormComponentProps, FormCreateOption } from 'antd/lib/form/Form'
+import { observer } from 'mobx-react'
+import { Button, Form, Input } from 'antd'
+import { FormComponentProps } from 'antd/lib/form/Form'
 import styles from './Home.scss'
 import RootStore from '@/store/rootStore';
 
@@ -31,8 +31,8 @@ class Home extends React.Component<HomeProps, {}> {
           xs: { span: 24 },
           sm: { span: 5 },
         },
-      };
-      const { form: {getFieldDecorator}, rootStore: { homeStore } }  = this.props
+      }
+      const { form: { getFieldDecorator }, rootStore: { homeStore } }  = this.props
         return (
             <div>
                 <div className={styles.main}>
@@ -51,10 +51,10 @@ class Home extends React.Component<HomeProps, {}> {
                   >
                     {getFieldDecorator('username', {
                       rules: [
-                        {required: true}
-                      ]
+                        { required: true },
+                      ],
                     })(
-                      <Input />
+                      <Input />,
                     )}
                   </Item>
                 </Form>
@@ -69,5 +69,5 @@ export default Form.create({
   },
   mapPropsToFields() {
 
-  }
+  },
 })(Home)

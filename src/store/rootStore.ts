@@ -1,6 +1,6 @@
 import { RouterStore } from 'mobx-react-router'
 import HomeStore from './HomeStore'
-import { observable } from 'mobx';
+import { observable } from 'mobx'
 
 class RootStore {
   homeStore: HomeStore

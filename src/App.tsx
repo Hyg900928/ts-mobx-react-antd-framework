@@ -1,13 +1,11 @@
 // import { hot } from 'react-hot-loader/root';
 import React from 'react'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
-import { observer, inject} from 'mobx-react'
-import DevTools from 'mobx-react-devtools';
+import { RouteComponentProps } from 'react-router-dom'
+import { observer, inject } from 'mobx-react'
 import createStore from '@/store/rootStore'
 
 import Routers from './router'
 
-const devToolsNode = process.env.NODE_ENV === 'development' ? <DevTools  /> : null
 
 interface AppProps extends RouteComponentProps<{}> {
   rootStore: createStore,
