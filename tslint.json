@@ -7,8 +7,7 @@
     "jsRules": {},
     "rules": {
       "semicolon": [
-        false,
-       "always"
+        false
       ],
       "indent": [
         true,
@@ -20,7 +19,7 @@
         "LF"
       ],
       "quotemark": [
-        true,
+        false,
         "single",
         "jsx-single"
       ],
