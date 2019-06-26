@@ -9,7 +9,7 @@ import  _debug from 'debug'
 import configs from '../configs'
 import webpackDevMiddleware from './middleware/webpack-dev'
 import webpackHMRMiddleware from './middleware/webpack-hmr'
-import webpackConfig from './webpack.config'
+import webpackConfig from './webpack.dev.config'
 
 
 
@@ -29,7 +29,8 @@ if (__DEV__) {
   debug('starting.....')
   // app.use(middleware(compiler))
   app.use(webpackDevMiddleware(compiler, {
-    publicPath
+    publicPath,
+    logLevel: 'error',
   }))
   app.use(webpackHMRMiddleware(compiler))
 } else {

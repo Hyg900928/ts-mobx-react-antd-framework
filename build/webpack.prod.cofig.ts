@@ -1,33 +1,19 @@
-// const webpack = require('webpack')
-// const path = require('path')
-// const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const TerserPlugin = require('terser-webpack-plugin')
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-// const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-// // const tsImportPluginFactory = require('ts-import-plugin')
-// const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin');
-// const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-// const { CheckerPlugin } = require('awesome-typescript-loader')
-// const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-// const WorkboxPlugin = require('workbox-webpack-plugin');
-// const CopyPlugin = require('copy-webpack-plugin')
-// const autoprefixer = require('autoprefixer')
-// const rootconfig = require('../configs/index.ts')
-
-import  webpack from 'webpack'
-import  path from 'path'
-import  HtmlWebpackPlugin from 'html-webpack-plugin';
-import  TerserPlugin from 'terser-webpack-plugin';
-import  MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import  OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
-import  ForkTsCheckerNotifierWebpackPlugin from 'fork-ts-checker-notifier-webpack-plugin';
-import  ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import webpack from 'webpack'
+import merge from 'webpack-merge'
+import path from 'path'
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import ForkTsCheckerNotifierWebpackPlugin from 'fork-ts-checker-notifier-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import { CheckerPlugin } from 'awesome-typescript-loader'
-import { CleanWebpackPlugin }  from 'clean-webpack-plugin';
-import  WorkboxPlugin from 'workbox-webpack-plugin';
-import  CopyPlugin from 'copy-webpack-plugin';
-import  autoprefixer from 'autoprefixer';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import WorkboxPlugin from 'workbox-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
+import autoprefixer from 'autoprefixer';
 import rootconfig from '../configs'
+import baseConfig from './webpack.base.config'
 
 
 
@@ -37,32 +23,17 @@ const __DEV__ = rootconfig.env === 'development'
 const __PROD__ = rootconfig.env === 'production'
 
 let config: webpack.Configuration = {
-  mode: __DEV__ ? 'development' : 'production',
-  name: 'client',
-  target: 'web',
+  mode: 'production',
   module: {
     rules: []
   },
-  resolve: {
-    modules: ['node_modules'],
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
-    alias: {
-      '@': path.resolve(__dirname, '../src/'),
-      // 'react-dom': '@hot-loader/react-dom',
-    },
-  },
-  devtool: __DEV__ ? 'source-map' : false,
+  devtool: false,
   entry: {
     main: [
       '@babel/polyfill',
       inRootSrc('src/Render.tsx'),
     ],
     vendor: rootconfig.compilerVendor,
-  },
-  output: {
-    filename: '[name].bundle.js',
-    path: inRootSrc('dist'),
-    publicPath: '/',
   },
   plugins: [
     new webpack.DefinePlugin(Object.assign({
@@ -105,7 +76,7 @@ let config: webpack.Configuration = {
       }
 
     },
-    minimize: __DEV__ ? false : true,
+    minimize: true,
     minimizer: [
       new TerserPlugin({
         cache: true,
@@ -147,8 +118,8 @@ config.module.rules.push({
           ],
         ],
         cacheDirectory: true,
-        cacheCompression: __PROD__,
-        compact: __PROD__
+        cacheCompression: true,
+        compact: true
       }
     },
     {
@@ -160,7 +131,7 @@ config.module.rules.push({
 
 config.module.rules.push({
   test: /\.css$/,
-  use:['style-loader', 'css-loader']
+  use: ['style-loader', 'css-loader']
 })
 
 config.module.rules.push({
@@ -185,33 +156,33 @@ config.module.rules.push({
       }
     }
   ]
-},)
+})
 
 config.module.rules.push({
   test: /\.scss$/,
   use: [
-    __DEV__ ? 'style-loader' : MiniCssExtractPlugin.loader,
-     {
-      loader:  'css-loader',
+    MiniCssExtractPlugin.loader,
+    {
+      loader: 'css-loader',
       options: {
-        sourceMap: __DEV__,
+        sourceMap: false,
         modules: true,
         importLoaders: 1,
       }
-     },
-     {
-      loader:  'sass-loader',
+    },
+    {
+      loader: 'sass-loader',
       options: {
-        sourceMap: __DEV__
+        sourceMap: false
       }
-     },
-     {
-       loader: 'postcss-loader',
-       options: {
+    },
+    {
+      loader: 'postcss-loader',
+      options: {
         plugins: () => [autoprefixer()],
-         sourceMap: __DEV__
-       }
-     }
+        sourceMap: false
+      }
+    }
   ],
 })
 
@@ -247,6 +218,11 @@ config.plugins.push(
     chunks: ['main', 'vendor'],
     filename: 'index.html',
   }),
+  // 将css 单独提取出来
+  new MiniCssExtractPlugin({
+    filename: '[name].[hash].css',
+    chunkFilename: "[id].[hash].css"
+  }),
   // 将public 里面的文件复制过去
   new CopyPlugin([
     {
@@ -255,58 +231,14 @@ config.plugins.push(
       toType: 'dir'
     }
   ]),
-  // 将css 单独提取出来
-  new MiniCssExtractPlugin({
-    filename: __DEV__ ? '[nmae].css' : '[name].[hash].css',
-    chunkFilename:  __DEV__ ? "[id].css" : "[id].[hash].css"
+  // 开启pwa
+  new WorkboxPlugin.GenerateSW({
+    clientsClaim: true,
+    skipWaiting: true
   }),
-
-
 )
-// Development tools
-if (__DEV__) {
-  // config.devServer = {
-  //   host: 'localhost',
-  //   port: 9000,
-  //   publicPath: '/',
-  //   contentBase: path.join(__dirname, '..', 'src'),
-  //   hot: true,
-  //   open: true,
-  //   overlay: {
-  //     errors: true
-  //   },
-  //   compress: true,
-  //   quiet: true,
-  //   noInfo: false,
-  //   lazy: false,
-  //   stats: 'errors-only',
-  //   historyApiFallback: true,
-  // }
-  // config.entry.main.push(`webpack-hot-middleware/client.js?path=/__webpack_hmr&timeout=1000&reload=true`)
-  config.entry = {
-    main: [
-      '@babel/polyfill',
-      inRootSrc('src/Render.tsx'),
-      `webpack-hot-middleware/client?path=/__webpack_hmr&timeout=1000&reload=true`,
-    ],
-    vendor: rootconfig.compilerVendor,
-  }
-  config.plugins.push(
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
-  )
 
 
-} else {
-    config.plugins.push(
-      // 开启pwa
-      new WorkboxPlugin.GenerateSW({
-        clientsClaim: true,
-        skipWaiting: true
-      }),
-    )
-}
-
-export default config
+export default merge(baseConfig, config)
 
 

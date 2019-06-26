@@ -1,6 +1,6 @@
 import path from 'path';
 import  webpack from 'webpack';
-import WebpackConfig from './webpack.config';
+import WebpackConfig from './webpack.prod.cofig';
 import config from '../configs';
 import  fs from 'fs-extra';
 import _debug from 'debug';
@@ -32,7 +32,7 @@ const WebpackCompiler = (config: any, statsFormat?: any) => {
   })
 }
 
-(async function () {
+(async function() {
   try {
     debug('Run compiler')
     const clientStats: any = await WebpackCompiler(WebpackConfig)
