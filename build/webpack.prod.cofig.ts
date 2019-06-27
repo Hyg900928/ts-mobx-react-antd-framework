@@ -27,7 +27,7 @@ let config: webpack.Configuration = {
   module: {
     rules: []
   },
-  devtool: false,
+  devtool: "source-map",
   entry: {
     main: [
       '@babel/polyfill',
