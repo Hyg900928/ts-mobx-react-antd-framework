@@ -9,4 +9,5 @@ backend/build/
 dist/
 yarn.lock
 .vscode/
+.eslintcache
 
