@@ -13,7 +13,7 @@
     }
   },
   "lint-staged": {
-    "**/*.less": "stylelint --syntax less",
+    "**/*.scss": "stylelint --syntax scss",
     "**/*.{js,jsx,tsx,ts,less,md,json}": [
       "prettier --write",
       "git add"
