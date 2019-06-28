@@ -34,7 +34,7 @@
     "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src && npm run lint:style",
     "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
     "lint:prettier": "check-prettier lint",
-    "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
+    "lint:style": "stylelint --fix \"src/**/*.scss\" --syntax scss",
     "prettier": "prettier -c --write **/*"
   },
   "betterScripts": {
