@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import { Button, Form, Input } from 'antd'
@@ -6,7 +6,7 @@ import { FormComponentProps } from 'antd/lib/form/Form'
 import styles from './Home.scss'
 import RootStore from '@/store/rootStore';
 
-const Item = Form.Item
+const { Item } = Form
 
 interface HomeProps extends FormComponentProps {
   Home: any,
@@ -18,9 +18,11 @@ class Home extends React.Component<HomeProps, {}> {
     constructor(props: HomeProps) {
       super(props)
     }
+
     componentDidMount() {
 
     }
+
     render() {
       const formItemLayout = {
         labelCol: {
@@ -32,7 +34,7 @@ class Home extends React.Component<HomeProps, {}> {
           sm: { span: 5 },
         },
       }
-      const { form: { getFieldDecorator }, rootStore: { homeStore } }  = this.props
+      const { form: { getFieldDecorator }, rootStore: { homeStore } } = this.props
         return (
             <div>
                 <div className={styles.main}>

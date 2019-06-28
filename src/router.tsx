@@ -1,13 +1,12 @@
 import React from 'react'
-import { default as Loadable } from 'react-loadable'
+import Loadable from 'react-loadable'
 import {
   Route,
   Switch,
 } from 'react-router-dom'
 
-const loading = ({ isLoading, error }) => {
-  return isLoading && !error ? <div>loading...</div> : error ? <div>error</div> : null
-}
+const loading = ({ isLoading, error }) => (isLoading && !error ? <div>loading...</div> : error ? <div>error</div> : null)
+
 
 const routes = [
   {
@@ -17,7 +16,7 @@ const routes = [
   },
   {
     path: '/about',
-    component:() => import('@/containers/About'),
+    component: () => import('@/containers/About'),
     exact: true,
   },
 ]
@@ -32,13 +31,13 @@ const Routers = ({
         <Switch>
           {
             routes.map(route => {
-              let r = translateRoute(route, route.path, {
+              const r = translateRoute(route, route.path, {
                 ...route,
                 component: Loadable({
                   loader: route.component,
                   loading,
                   render(loaded, props: any) {
-                    let Component = loaded.default
+                    const Component = loaded.default
                     return <Component {...props} rootStore={rootStore} />
                   },
                 }),

@@ -1,16 +1,18 @@
-import Utils from '../utils'
 import _debug from 'debug'
+import Utils from '.'
+
 const debug = _debug('app:Admin:MessageManagement')
 const StorageKeys = ['gameAppId', 'gameInfo', 'gameName']
 const Storage = {
   getItem(key: any) {
     let value
     try {
-      if(StorageKeys.indexOf(key) != -1) {
+      if (StorageKeys.indexOf(key) !== -1) {
         value = sessionStorage.getItem(key)
-      }else {
+      } else {
         value = localStorage.getItem(key)
       }
+      // return value
     } catch (ex) {
       debug('localStorage.getItem报错, ', ex.message)
     } finally {
@@ -20,9 +22,9 @@ const Storage = {
   setItem(key: any, val: any) {
     try {
       // ios safari 无痕模式下，直接使用 localStorage.setItem 会报错
-      if(StorageKeys.indexOf(key) != -1) {
+      if (StorageKeys.indexOf(key) !== -1) {
         sessionStorage.setItem(key, val)
-      }else {
+      } else {
         localStorage.setItem(key, val)
       }
     } catch (ex) {
@@ -37,10 +39,6 @@ const Storage = {
   getItemBasicZlib(key: any) {
     return Utils.zlibDecryption(this.getItem(key))
   },
-  setItemBasicZlib(key: any, val: any) {
-    this.setItem(key, Utils.zlibEncryption(val))
-  },
-
   // Reference Data Type
   getItemJson(key: any) {
     return this.getItem(key) != null ? JSON.parse(this.getItem(key)) : {}
@@ -51,9 +49,6 @@ const Storage = {
 
   getItemJsonZlib(key: any) {
     return this.getItem(key) != null ? JSON.parse(Utils.zlibDecryption(this.getItem(key))) : {}
-  },
-  setItemJsonZlib(key: any, val: any) {
-    this.setItem(key, Utils.zlibEncryption(JSON.stringify(val)))
   },
 
 }

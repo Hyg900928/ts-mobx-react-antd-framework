@@ -18,6 +18,7 @@ class App extends React.Component<AppProps, {}> {
   constructor(props: AppProps) {
     super(props)
   }
+
   render() {
     const { rootStore } = this.props
     // 注意 Devtools包,与mobx-react@6, 不兼容,
