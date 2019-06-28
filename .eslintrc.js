@@ -20,6 +20,7 @@ module.exports = {
     'global-require': 0,
     'arrow-parens': 0,
     'react/prefer-stateless-function': 0,
+    'no-plusplus': 0,
   },
   globals: {
     Hyg: true,

@@ -1,24 +1,22 @@
-import Utils from '@/utils'
-import { observable, action, runInAction } from 'mobx'
-import _debug from 'debug'
-import BaseStore from './BaseStore'
+import { observable, action } from 'mobx';
+// import _debug from 'debug'
 
-const debug = _debug('app:HomeStore')
+// const debug = _debug('app:HomeStore')
 
 class HomeStore {
   @observable a = 'hhh';
+
   @observable num = 0;
+
   rootStore: any;
+
   constructor(rootStore: any) {
-    this.rootStore = rootStore
+    this.rootStore = rootStore;
   }
 
   @action add = async () => {
-    this.num++
-  }
-
-
-
+    this.num++;
+  };
 }
 
-export default HomeStore
+export default HomeStore;
