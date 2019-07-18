@@ -137,9 +137,7 @@ config.module.rules.push({
 config.module.rules.push({
   test: /\.less$/,
   use: [
-    {
-      loader: "style-loader"
-    },
+    MiniCssExtractPlugin.loader,
     {
       loader: "css-loader",
       options: {
@@ -192,7 +190,7 @@ config.module.rules.push({
 })
 config.module.rules.push({
   test: /\.(png|jpg|jpeg|gif|svg)$/,
-  use: ['url-loader?limit=8192&name=files/[md5:hash:base64:10].[ext]'],
+  use: ['file-loader'],
 })
 config.module.rules.push({
   test: /\.(eot|ttf|otf|woff|woff2)$/,

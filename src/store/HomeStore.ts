@@ -1,16 +1,19 @@
 import { observable, action } from 'mobx';
+import RootStore from './rootStore'
+import BaseStore from './BaseStore'
 // import _debug from 'debug'
 
 // const debug = _debug('app:HomeStore')
 
-class HomeStore {
+class HomeStore extends BaseStore {
   @observable a = 'hhh';
 
   @observable num = 0;
 
-  rootStore: any;
+  rootStore: RootStore;
 
-  constructor(rootStore: any) {
+  constructor(rootStore: RootStore) {
+    super()
     this.rootStore = rootStore;
   }
 

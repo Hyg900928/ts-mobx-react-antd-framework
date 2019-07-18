@@ -45,7 +45,10 @@ class Home extends React.Component<HomeProps, {}> {
                 <br />
                 <p>num: { homeStore.num }</p>
                 <Button type='primary' onClick={() => homeStore.add()}>确定</Button>
+                <br />
                 <Link to='/about'>About</Link>
+                <br />
+                <Link to='/spreadSheet'>spreadSheet</Link>
                 <Form>
                   <Item
                     {...formItemLayout}

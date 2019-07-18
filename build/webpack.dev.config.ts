@@ -67,7 +67,7 @@ let config: webpack.Configuration = {
     ]),
     // 将css 单独提取出来
     new MiniCssExtractPlugin({
-      filename: '[nmae].css',
+      filename: '[name].css',
       chunkFilename: "[id].css",
     }),
     new webpack.HotModuleReplacementPlugin(),
@@ -123,6 +123,17 @@ let config: webpack.Configuration = {
     ]
   },
 }
+
+config.module.rules.push({
+  test: /\.(js|jsx)$/,
+  exclude: /node_modules/,
+  loader: 'babel-loader',
+  query: {
+    cacheDirectory: true,
+    // plugins: ['transform-runtime'],
+    // presets: ['env', 'react'],
+  },
+})
 
 // 首先使用 awesome-typescript-loader, 再使用babel-loader
 config.module.rules.push({
@@ -218,11 +229,11 @@ config.module.rules.push({
 })
 config.module.rules.push({
   test: /\.(png|jpg|jpeg|gif|svg)$/,
-  use: ['url-loader?limit=8192&name=files/[md5:hash:base64:10].[ext]'],
+  use: ['file-loader'],
 })
 config.module.rules.push({
   test: /\.(eot|ttf|otf|woff|woff2)$/,
-  use: ['url-loader?limit=10000&name=files/[md5:hash:base64:10].[ext]'],
+  use: ['file-loader?limit=10000&name=files/[md5:hash:base64:10].[ext]'],
 })
 
 

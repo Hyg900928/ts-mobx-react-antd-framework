@@ -19,6 +19,11 @@ const routes = [
     component: () => import('@/containers/About'),
     exact: true,
   },
+  {
+    path: '/spreadSheet',
+    component: () => import('@/containers/SpreadSheet/index'),
+    exact: true,
+  },
 ]
 
 const Routers = ({
